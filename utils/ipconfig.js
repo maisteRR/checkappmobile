@@ -1,13 +1,11 @@
-import {API_KEY} from "@env";
-import * as firebase from "firebase";
-const config = {
-    apiKey: `${API_KEY}`,
-    authDomain: "checkapp-ecf7d.firebaseapp.com",
-    databaseURL: "https://checkapp-ecf7d.firebaseio.com",
-    projectId: "checkapp-ecf7d",
-    storageBucket: "checkapp-ecf7d.appspot.com",
-    messagingSenderId: "698598467527",
-    appId: "1:698598467527:web:f3d7f14fccf0fbd15ddbe2"
-}
+import Constants from "expo-constants";
+const { manifest } = Constants;
+import axios from 'axios';
+const devApi = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts.dev
+    ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+    : `api.example.com`;
 
-export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+const Api = "checkbackserver.herokuapp.com";
+axios.defaults.baseURL = `https://${Api}`;
+
+export default axios;

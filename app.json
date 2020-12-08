@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "checkapp",
-    "slug": "checkapp",
-    "version": "1.0.0",
+    "name": "CheckApp",
+    "slug": "CheckApp",
+    "version": "1.1.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#3fbadd"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,6 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.maister.checkapp",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

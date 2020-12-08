@@ -4,13 +4,10 @@ import {AntDesign} from "@expo/vector-icons"
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 
-export default function CheckInput() {
-    const dispatch = useDispatch();
-    const checkNumber = useSelector(state => state.checkNumber)
-    const handleCheckNumberChange = (textValue) =>{
-        dispatch({type: 'CHECK_NUMBER_CHANGE', payload: textValue})
-    }
+const CheckInput = () => {
 
+    const dispatch = useDispatch();
+    const checkNumber = useSelector(state => state.findCheck.checkNumber)
     return (
         <TextInputContainer>
             <AntDesign name="barcode" size={24} color="grey"/>
@@ -18,14 +15,16 @@ export default function CheckInput() {
                 selectionColor="grey"
                 keyboardType='decimal-pad'
                 placeholder="Номер чеку"
-                editable
                 value={checkNumber}
-                onChangeText={handleCheckNumberChange}
-                maxLength={8}
+                editable
+                onChangeText={(textValue)=> dispatch({type: 'CHANGE_CHECK_NUMBER', payload: textValue})}
+                maxLength={20}
             />
         </TextInputContainer>
     )
 }
+
+export default CheckInput;
 
 const TextInputContainer = styled.View`
     flex-direction: row;

@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import styled from 'styled-components';
-import {CheckInput, FiscalInput, DateTimeInput, CheckCard} from './components'
+import {CheckInput, FiscalInput, DateTimeInput, CheckCard} from './index'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import api from './utils/api'
-import {TouchableOpacity, View } from 'react-native'
+import api from '../utils/api'
+import {TouchableOpacity, View, Text, Alert } from 'react-native'
 
 const FindCheck = ({navigation}) => {
     const body = useSelector(state => state.findCheck)
@@ -12,13 +12,32 @@ const FindCheck = ({navigation}) => {
 
     return (
         <FindCheckContainer>
+            <HeaderText>Пошук чеку</HeaderText>
             <CheckInput/>
             <FiscalInput/>
             <DateTimeInput/>
             <SendButton onPress={() => {
-                navigation.navigate('CheckCard')
                 api.getCheckInfo(body).then((res)=>{
-                    dispatch({type: 'ADD_PRODUCTS', payload: res.data.C[0].P})
+                    if(res.data.error){
+                        Alert.alert(
+                            "Помилка",
+                            res.data.error_description,
+                            [
+                                {
+                                    text: "Гаразд",
+                                    style: "cancel"
+                                }
+                            ],
+                            { cancelable: false });
+                    }
+                    else{
+                        navigation.navigate('CheckCard')
+                        dispatch({type: 'ADD_PRODUCTS', payload: res.data.C[0].P})
+                        dispatch({type: 'ADD_CASHIER', payload: res.data.C[0].L[0]._})
+                        dispatch({type: 'ADD_CHECKOUT', payload: res.data.C[0].L[1]._})
+                        dispatch({type: 'ADD_CHECKSUM', payload: res.data.C[0].E[0]['$'].SM})
+                        dispatch({type: 'ADD_CHECKTAX', payload: res.data.C[0].E[0]['TX'][0]['$'].TXSM})
+                    }
                 })
             }}>
                 <Ionicons
@@ -31,6 +50,13 @@ const FindCheck = ({navigation}) => {
     );
 }
 export default FindCheck;
+
+const HeaderText = styled.Text`
+    font-size: 24px;
+    color: #47D5FD;
+    font-weight: bold;
+    margin-bottom: 30px;
+`;
 
 const SendButton = styled.TouchableOpacity`
     width: 80%;

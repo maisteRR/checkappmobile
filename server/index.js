@@ -7,7 +7,11 @@ const parseString = require('xml2js').parseString;
 const Iconv  = require('iconv').Iconv;
 
 app.use(express.json())
+app.get('/', (req, res) =>{
+    res.send('Back');
+})
 app.post('/check', (req, res) => {
+    console.log('EST');
     let config = {
         method: 'get',
         url: 'https://cabinet.tax.gov.ua/ws/api_public/rro/chkAll',
@@ -48,9 +52,10 @@ app.post('/check', (req, res) => {
         });
 });
 
-app.listen(3000, (err)=>{
+const port = process.env.PORT || 5000
+app.listen(port, (err)=>{
     if(err) {
         console.error(err)
     }
-    console.log('Server started...')
+    console.log(`Server started at port ${port}`)
 })

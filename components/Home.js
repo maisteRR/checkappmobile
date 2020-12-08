@@ -3,13 +3,11 @@ import {Text, View, Image, TouchableOpacity, Alert, StatusBar, Dimensions } from
 import styled from 'styled-components';
 import { AntDesign } from '@expo/vector-icons';
 
-import {useDispatch, useSelector} from "react-redux";
-
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 9 / 16) + 210;
 const imageWidth = dimensions.width;
 
-export default function Home({navigation}) {
+const Home= ({navigation}) => {
     return (
         <StartPage>
             <StatusBar hidden={true} />
@@ -19,12 +17,12 @@ export default function Home({navigation}) {
             </AppNameContainer>
             <StartImageContainer>
                 <StartImage
-                    source={require('./assets/start.png')}
+                    source={require('../assets/start.png')}
                 />
             </StartImageContainer>
             <BottomTextContainer>
                 <BottomTitle>
-                    Що ми пропонуємо?
+                    Сумніви? Перевірте!
                 </BottomTitle>
             </BottomTextContainer>
             <ButtonContainer>
@@ -36,6 +34,7 @@ export default function Home({navigation}) {
     );
 }
 
+export default Home;
 
 const StartPage = styled.View`
     flex: 1;
